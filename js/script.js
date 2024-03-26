@@ -10,6 +10,15 @@ const phoneHunterLoader = async (searchText) =>{
 const displayData = (phones) =>{
     const main = document.getElementById('main')
     main.textContent = ''
+
+    const showAllItem = document.getElementById("show-all-item")
+    if(phones.length > 12){
+      showAllItem.classList.remove('hidden')
+    }else{
+      showAllItem.classList.add('hidden')
+    }
+    
+    phones = phones.slice(0,12)
     phones.forEach((phone)=> {
         // console.log(phone)
         const child = document.createElement('div')
@@ -26,13 +35,25 @@ const displayData = (phones) =>{
         `
         main.appendChild(child)
     })
+
+    loadingSinner(false)
 }
 
 
 // search result
 const searchInput = document.getElementById('search-input')
 const searchPhone = () =>{
-   const searchText = searchInput.value;
+    loadingSinner(true)
+    const searchText = searchInput.value;
     phoneHunterLoader(searchText)
     searchInput.value = ''
+}
+
+const loadingSinner = (isLoading) =>{
+  const loadingData = document.getElementById('loading-spiner')
+  if(isLoading){
+    loadingData.classList.remove('hidden')
+  }else{
+    loadingData.classList.add('hidden')
+  }
 }
